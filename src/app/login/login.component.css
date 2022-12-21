@@ -1,0 +1,35 @@
+
+#img{
+    background-image: url('../../assets/img/imageTM.png');
+    background-position: center;   
+   
+}
+#cardLogin{
+    margin: auto;
+    transform: translate(20px, 80px);
+   width: 80%;
+   height: 80%;
+  
+}
+
+.card-header{
+ background-image: url('../../assets/img/logo.png');
+ background-position: center;
+background-repeat: no-repeat;
+ height: 80px;
+}
+
+.mat-select-panel {
+  margin: 0px;
+    padding: 0px;
+  }
+#aceptarButton{
+    margin: 10px;
+}
+
+#pass{
+ transform: translate(16px, 0px)
+}
+
+
+

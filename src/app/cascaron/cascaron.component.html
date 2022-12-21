@@ -1,0 +1,76 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button (click)="drawer.toggle()" class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>Herramientas S5</span>
+    <span class="example-spacer"></span>
+    <span>{{titulo_component}}</span>
+    <span class="example-spacer"></span>
+    {{ruta_component}}
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/cascaron/{{ruta_component}}" (click)="titulo_component=''">
+            <mat-icon>house</mat-icon>
+            <span>Inicio</span>
+        </button>
+        <button mat-menu-item (click)=exit()>
+            <mat-icon>open_in_new</mat-icon>
+            <span>Salir</span>
+        </button>
+
+    </mat-menu>
+</mat-toolbar>
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side" opened>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="true" (closed)="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Importaciones
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-panel-description>
+                    <button mat-button color="primary"  class="btnPanelLat" (click)="titulo_component='Nomencladores'">
+                        Nomencladores
+                    </button>
+                </mat-panel-description>
+            </mat-expansion-panel>
+            <!-- Control de Versiones -->
+            <!-- <mat-expansion-panel (opened)="true" (closed)="false" *ngIf="ruta_component=='soporte'">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Control de Versiones
+                    </mat-panel-title>
+
+                </mat-expansion-panel-header>
+                <mat-panel-description>
+                    <button mat-button color="primary" (click)="openDialog('versionado')">
+                        Versionado
+                    </button>
+                </mat-panel-description>
+            </mat-expansion-panel> -->
+            <mat-expansion-panel (opened)="true" (closed)="false" *ngIf="ruta_component=='soporte'">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Gestión
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-panel-description>
+                    <button mat-button class="btnPanelLat" color="primary" (click)="titulo_component='Usuarios'">
+                        Usuarios
+                    </button>
+                </mat-panel-description>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </mat-drawer>
+    <!-- Componentes hijos -->
+    <app-importar-nomencladores *ngIf="titulo_component=='Nomencladores'"></app-importar-nomencladores>
+    <app-gestion-usuarios *ngIf="titulo_component=='Usuarios'"></app-gestion-usuarios>
+
+</mat-drawer-container>
+<mat-toolbar color="primary" id='footer'>
+    <h6> Herramientas S5. Version Beta.2022</h6>
+</mat-toolbar>

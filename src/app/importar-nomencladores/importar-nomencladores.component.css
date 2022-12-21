@@ -1,0 +1,62 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  .example-form-field {
+    width: 200px;
+    width: 50%;
+    height: 25%;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  #import{
+    margin: 0px;
+    padding: 0px;
+    transform: translate(10px, 60px);
+  }
+  
+
+  #uploadExcel{
+    transform: translate(-10px, 0px);
+    width: 5em;
+  }
+    
+    
+  #row{
+margin-top: 20px;
+  }
+  
+
+/* Tabla */
+/* table {
+  width: 80%;
+  padding: 0px;
+  
+} */
+
+table {
+  width: 100%;
+}
+td.mat-cell{
+  justify-content: center;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+
+
+#filtro{
+  padding: 0px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  height: 25%;
+}
+
+td, th {
+  width: 5%;
+}

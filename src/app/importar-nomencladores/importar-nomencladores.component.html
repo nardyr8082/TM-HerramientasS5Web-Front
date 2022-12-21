@@ -1,0 +1,454 @@
+<div class="row justify-content-center">
+  <div class="row" id="row">
+    <div class="col-9">
+      <mat-card class="table-card">
+
+        <mat-card-content>
+          <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()"> -->
+          <mat-form-field class="example-form-field">
+            <ngx-mat-file-input [accept]="accept" id="fileUpload" [formControl]="archivoControl" >
+              <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+            </ngx-mat-file-input>
+          </mat-form-field>
+          <div class="row">
+            <div class="col-4">
+              <mat-form-field appearance="fill">
+                <mat-label>Seleccione nomenclador</mat-label>
+                <mat-select [(ngModel)]="selectedHoja">
+                  <mat-option *ngFor="let hoja of hojasExcels" [value]="hoja"  (click)=HabilitarBtn()>
+                    {{hoja.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-8">
+              <button id="uploadExcel" mat-flat-button color="primary" [disabled]='disableBotton' type="submit" (click)="listarNomenclador(selectedHoja)">Listar</button>
+              <button mat-flat-button color="primary" [disabled]='disableBotton' type="submit" (click)="importarNomenclador(selectedHoja)">Importar Nomenclador</button>
+            </div>
+          </div>
+          <!-- Spinner -->
+          <mat-label *ngIf="requestCheckConecction">Importando Nomenclador {{selectedHoja['name']}}...</mat-label>
+          <mat-spinner *ngIf="requestCheckConecction"></mat-spinner>
+          <!-- fim de spinner -->
+          <!--TAbla organismo-->
+          <mat-form-field>
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event,selectedHoja)" placeholder="Ejemplo Numero" #input>
+          </mat-form-field>
+          <!-- Tablassss -->
+          <div class="mat-elevation-z8">
+            <table *ngIf="selectedHoja.name == 'ORGANISMO'" mat-table [dataSource]="dataSourceOrgan" matSort>
+
+              <ng-container matColumnDef="OrganCodigo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganCodigo </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganCodigo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="OrganDescripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganDescripcion </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganDescripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="OrganEI">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganEI </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganEI}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="OrganUI">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganUI </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganUI}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="OrganFechaModif">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganFechaModif </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganFechaModif}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="OrganActivo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganActivo </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganActivo}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsOrgan"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsOrgan;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Relacion Org-Union -->
+            <table *ngIf="selectedHoja.name == 'RELACION ORG - UNION'" mat-table [dataSource]="dataSourceRelacionOrganUnionData" matSort>
+
+              <ng-container matColumnDef="OrganCodigo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> OrganCodigo </th>
+                <td mat-cell *matCellDef="let row"> {{row.OrganCodigo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="UnionCodigo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> UnionCodigo </th>
+                <td mat-cell *matCellDef="let row"> {{row.UnionCodigo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="UnionDescripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> UnionDescripcion </th>
+                <td mat-cell *matCellDef="let row"> {{row.UnionDescripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="UnionUI">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> UnionUI </th>
+                <td mat-cell *matCellDef="let row"> {{row.UnionUI}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="UnionFechaModif">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> UnionFechaModif </th>
+                <td mat-cell *matCellDef="let row"> {{row.UnionFechaModif}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="UnionActivo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> UnionActivo </th>
+                <td mat-cell *matCellDef="let row"> {{row.UnionActivo}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsRelacionOrganUnion"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsRelacionOrganUnion;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Reuup -->
+            <table *ngIf="selectedHoja.name == 'REEUP'" mat-table [dataSource]="dataSourceReeup" matSort>
+
+              <ng-container matColumnDef="ReeupCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ReeupCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupCod}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupNom">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ReeupNom </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupNom}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupDir">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ReeupDir </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupDir}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupTelef">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ReeupTelef </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupTelef}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupCAE">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ReeupCAE </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupCAE}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupOrg">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ReeupOrg </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupOrg}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupSub">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ReeupSub </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupSub}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupNAE">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ReeupNAE </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupNAE}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupSiglas">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ReeupSiglas </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupSiglas}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ReeupActivo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ReeupActivo </th>
+                <td mat-cell *matCellDef="let row"> {{row.ReeupActivo}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsReeup"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsReeup;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Paises -->
+            <table *ngIf="selectedHoja.name == 'PAISES'" mat-table [dataSource]="dataSourcePaises" matSort>
+
+              <ng-container matColumnDef="PaisCodIntern">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisCodIntern </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisCodIntern}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PaisDescripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisDescripcion </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisDescripcion}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PaisCiudadania">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisCiudadania </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisCiudadania}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PaisSiglas">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisSiglas </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisSiglas}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PaisSeleccionado">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisSeleccionado </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisSeleccionado}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PaisBandera">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisBandera </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisBandera}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="PaisBandera_GXI">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PaisBandera_GXI </th>
+                <td mat-cell *matCellDef="let row"> {{row.PaisBandera_GXI}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsPaises"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsPaises;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Provincia -->
+            <table *ngIf="selectedHoja.name == 'PROV'" mat-table [dataSource]="dataSourceProvincia" matSort>
+
+              <ng-container matColumnDef="ProvCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ProvCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.ProvCod}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ProvNombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ProvNombre </th>
+                <td mat-cell *matCellDef="let row"> {{row.ProvNombre}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsProvincia"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsProvincia;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Municipio -->
+            <table *ngIf="selectedHoja.name == 'MUNICIPIOS'" mat-table [dataSource]="dataSourceMunicipio" matSort>
+
+              <ng-container matColumnDef="ProvCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ProvCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.ProvCod}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="MunicCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> MunicCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.MunicCod}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="MunicNombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> MunicNombre </th>
+                <td mat-cell *matCellDef="let row"> {{row.MunicNombre}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsMunicipio"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsMunicipio;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Repartos -->
+            <table *ngIf="selectedHoja.name == 'REPARTOS'" mat-table [dataSource]="dataSourceRepartos" matSort>
+
+              <ng-container matColumnDef="TRepartosCodigo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> TRepartosCodigo </th>
+                <td mat-cell *matCellDef="let row"> {{row.TRepartosCodigo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="ProvCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ProvCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.ProvCod}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="TRepartosNombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> TRepartosNombre </th>
+                <td mat-cell *matCellDef="let row"> {{row.TRepartosNombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="MunicCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> MunicCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.MunicCod}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsRepartos"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsRepartos;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <!-- Tabla Nit -->
+            <table *ngIf="selectedHoja.name == 'NIT'" mat-table [dataSource]="dataSourceNit" matSort>
+
+              <ng-container matColumnDef="NITCodigo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITCodigo </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITCodigo}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NITDescrip">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITDescrip </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITDescrip}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NITReeupCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITReeupCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITReeupCod}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NITSiglas">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITSiglas </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITSiglas}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NITDirec">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITDirec </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITDirec}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NITDPA">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITDPA </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITDPA}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NAECOD">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NAECOD </th>
+                <td mat-cell *matCellDef="let row"> {{row.NAECOD}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="NITSuborCod">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NITSuborCod </th>
+                <td mat-cell *matCellDef="let row"> {{row.NITSuborCod}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsNit"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsNit;"></tr>
+
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No existen datos para filtrar "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+          </div>
+
+
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col-3">
+        <app-conexion-db (formEvent)="receiveMessage($event)"></app-conexion-db>
+    </div>
+    
+    <!-- <div class="col-3">
+     <mat-card class="formAdd-card">
+        <mat-card-title>
+          <div class="row">
+            <div class="col-9">
+                <h3>Configuracion Servidor</h3>
+            </div>
+            <div class="col-3">
+                <button mat-mini-fab color="primary"  matTooltip="Limpiar Conexion" (click)='limpiarConexcion(configBDForm)' aria-label="Example icon button with a delete icon">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+            </div>
+          </div>
+        </mat-card-title>
+        <mat-card-content>
+    
+          <form [formGroup]="configBDForm" (ngSubmit)="onCheckConection(configBDForm.value)">
+            <mat-form-field class="example-form-field">
+              <mat-label>Servidor</mat-label>
+              <input matInput type="text" [(ngModel)]="valueServidor" formControlName="server">
+            </mat-form-field>
+    
+            <mat-form-field class="example-form-field">
+              <mat-label>Instancia</mat-label>
+              <input matInput type="text" [(ngModel)]="valueIntancia" formControlName="instanceName">
+            </mat-form-field>
+    
+            <mat-form-field class="example-form-field">
+              <mat-label>Base dato</mat-label>
+              <input matInput type="text" [(ngModel)]="valueBD" formControlName="database">
+            </mat-form-field>
+    
+            <mat-form-field class="example-form-field">
+              <mat-label>Usuario-Servidor</mat-label>
+              <input matInput type="text" [(ngModel)]="valueUserServe" formControlName="userName">
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+              <mat-label>Contraseña-Servidor</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+
+            <mat-card-actions>
+              <button mat-button>Verificar conexion</button>
+            </mat-card-actions>
+          </form>
+          <mat-card-footer>
+            <mat-progress-bar *ngIf="requestCheckConecction" mode="indeterminate"></mat-progress-bar>
+          </mat-card-footer>
+        </mat-card-content>
+      </mat-card>
+    </div> -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="container" id="import">
+
+
+
+  <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input formControlName ="name" >
+    <button type="submit">Submit</button>
+    </form> -->
+
+</div>

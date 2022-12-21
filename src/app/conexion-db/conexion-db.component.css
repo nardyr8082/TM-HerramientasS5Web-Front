@@ -1,0 +1,33 @@
+#row {
+  margin-top: 20px;
+}
+
+
+@media screen and ( min-width:1000px) and (max-width:1299px)
+ {
+  .example-form-field{
+  width: 150px;
+  }
+  .btnlimpiar{
+    transform: translate(-15px, 10px);
+  }
+ }
+
+@media screen and (min-width:1300px) and (max-width: 1400px) { 
+  .example-form-field{
+     width: 220px;
+     
+   }
+ }
+
+ @media screen and (min-width:1400px) { 
+  .example-form-field{
+     width: 230px;
+     
+   }
+ }
+
+ 
+  
+
+

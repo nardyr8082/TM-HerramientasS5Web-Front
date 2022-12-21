@@ -1,0 +1,49 @@
+<div class="container-md">
+  <div class="row">
+    <div class="col-9">
+      <div class="container" id="card">
+        <div class="p-5 bg-image">
+          <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <mat-card id='user-card'>
+                  <mat-card-header>
+                    <mat-card-title>Usuario:{{selectedValue}}</mat-card-title>
+                  </mat-card-header>
+                  <form [formGroup]="gestionUsuarioAdminForm" (ngSubmit)="onSendOperacion(gestionUsuarioAdminForm.value)">
+                  <mat-card-content>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Seleccion operacion</mat-label>
+                      <mat-select [(ngModel)]="selectedValue" name="operacion" formControlName="operacionSelected">
+                        <mat-option *ngFor="let operacion of operaciones" [value]="operacion.value">
+                          {{operacion.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <p *ngIf="selectedValue==''"> Operacion seleccionada: </p>
+                    <p *ngIf="selectedValue=='admin'"> Actualizar contraseña {{selectedValue}}  </p>
+                    <p *ngIf="selectedValue=='desbloquear'"> Desbloquear usuarios bloqueados </p>
+                  </mat-card-content>
+                  <mat-card-actions align="end">
+                    <button mat-button [disabled]="disablebtn">Aceptar</button>
+                  </mat-card-actions>
+                </form>
+                  <mat-card-footer>
+                    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+                  </mat-card-footer>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <app-conexion-db (formEvent)="receiveMessage($event)"></app-conexion-db>
+    </div>
+
+  </div>
+
+
+
+</div>

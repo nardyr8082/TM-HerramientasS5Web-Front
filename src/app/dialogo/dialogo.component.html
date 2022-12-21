@@ -1,0 +1,88 @@
+<div *ngIf="tipo_dialogo==='Conexion'">
+  <h1 mat-dialog-title>Conexion</h1>
+  <div mat-dialog-content>{{respuesta}}</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</div>
+
+<div *ngIf="tipo_dialogo==='ImportarNomVacio'">
+  <h1 mat-dialog-title style="color: indianred">Error</h1>
+  <div mat-dialog-content>{{respuesta}}</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</div>
+
+<div *ngIf="tipo_dialogo==='ImportadoNom'">
+  <h1 mat-dialog-title style="color:green">Resultado de la Importacion</h1>
+  <div mat-dialog-content>{{respuesta}}</div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</div>
+
+<div *ngIf="tipo_dialogo==='ImportarNom'">
+  <h1 mat-dialog-title style="color:green">Importar Nomenclador</h1>
+  <div mat-dialog-content>{{respuesta}}</div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)='closeDialog()'>Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+
+</div>
+
+<div *ngIf="tipo_dialogo==='versionado'">
+  <div mat-dialog-content>
+    <div class="row">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title color="primary">Versionado y EXS5ACTPACK</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]='versionadoForm' (ngSubmit)="onGenerarVersionado(versionadoForm)">
+          <mat-card-content>
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Versión</mat-label>
+                <input id='version' placeholder="Ejemplo:  0-9.0-9.0-9" required matInput formControlName="version">
+              </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Descripcion</mat-label>
+                <textarea matInput formControlName="descripcion"></textarea>
+              </mat-form-field>
+              </div>
+            <!-- <mat-divider></mat-divider> -->
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button>Aceptar</button>
+          </mat-card-actions>
+        </form>
+        <mat-card-footer>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+  <!-- <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)='closeDialog()'>Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div> -->
+
+</div>
+
+<div *ngIf="tipo_dialogo==='Gestion Usuario'">
+  <h1 mat-dialog-title style="color:green">Gestion Usuario</h1>
+  <div mat-dialog-content>{{respuesta}}</div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="closeDialog()">Aceptar</button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</div>
+
+<div *ngIf="tipo_dialogo==='Respuesta Gestion Usuario'">
+  <h1 mat-dialog-title style="color:green">Gestion Usuario</h1>
+  <div mat-dialog-content>{{respuesta}}</div>
+  <div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+  </div>
+</div>

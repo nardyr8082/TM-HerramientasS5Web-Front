@@ -1,0 +1,52 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  .example-container {
+    position: fixed;
+    width: 100%;
+    height: 85%;
+    background-image: url(../../assets/img/size50.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    
+   /* border: 1px solid rgba(0, 0, 0, 0.5);*/
+  }
+  .btnPanelLat{
+    width: 100%;
+    height: 100%;
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 5px;
+   
+  }
+
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  
+
+
+
+/*Acordion*/
+#footer {
+  position: fixed;
+  height: 5%;
+  bottom: 0;
+  width: 100%;
+  
+  
+
+}
+
+  
+  

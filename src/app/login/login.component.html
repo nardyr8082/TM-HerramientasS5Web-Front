@@ -1,0 +1,51 @@
+<body id="img">
+    <div class="container" id="card">
+        <div class="p-5 bg-image">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card text-center" id="cardLogin">
+                            <div class="card-header" >
+                               <!--  <img src="/frontend/src/assets/img/logoLogin.png" class="card-img-top" alt="..."> -->
+                            </div>
+                            <div class="card-body">
+                                <h2 class="card-title">HERRAMIENTAS SISCONT5</h2>
+                                <div class="row-button">
+                                        <mat-form-field appearance="fill">
+                                        <mat-label>Seleccione sección</mat-label>
+                                        <mat-select disableRipple [(value)]="selected">
+                                            <mat-option value="1">Cliente</mat-option>
+                                            <mat-option value="2">Soporte</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <button id="aceptarButton" *ngIf="selected==1" mat-fab color="primary" routerLink="/cascaron/cliente">Aceptar</button>
+
+                                    <div id="pass" *ngIf="selected==2">
+                                      <form class="example-form">
+                                            <mat-form-field class="example-full-width" appearance="fill">
+                                                <mat-label>Contraseña</mat-label>
+                                                <input id="InputPass" matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" placeholder="Contraseña">
+                                            </mat-form-field>
+                                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button>
+
+                                        </form>
+                                        <button id="aceptarButtonPass" *ngIf="passwordFormControl.value=='Siscont5*'" (click)="onLogin()" mat-mini-fab
+                                            color="primary" aria-label="Example icon button with a plus one icon">
+                                            <mat-icon>check</mat-icon>
+                                        </button>
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<router-outlet></router-outlet>
