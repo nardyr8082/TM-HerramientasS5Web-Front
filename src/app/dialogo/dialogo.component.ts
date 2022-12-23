@@ -27,13 +27,13 @@ export class DialogoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
+   // console.log(this.data)
     this.respuesta = this.data.rs
     this.tipo_dialogo = this.data.d
   }
 
   onGenerarVersionado(form: any) {
-    console.log(form);
+   // console.log(form);
     let formValues = form.value
     if (form.status === 'VALID') {
       this.dialogR = this.dialog.open(DialogoHijoComponent, {

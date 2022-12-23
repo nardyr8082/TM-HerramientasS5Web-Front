@@ -1,0 +1,2 @@
+Compilar para produccion despues se copia en la carpeta del iis
+ng build --configuration=production --base-href "/herramientas-s5/"

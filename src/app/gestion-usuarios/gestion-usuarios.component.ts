@@ -42,7 +42,7 @@ export class GestionUsuariosComponent implements OnInit {
   ]
 
   ngOnInit (): void {
-    console.log(this.selectedValue)
+   // console.log(this.selectedValue)
   }
 
   receiveMessage (event: any) {
@@ -70,13 +70,13 @@ export class GestionUsuariosComponent implements OnInit {
           this.loading = true
           this.api.OperacionGestionUsuarioAdmin(form).subscribe({
             next: data => {
-              console.log(data)
+          //    console.log(data)
               this.OpenDialogo(data, 'Respuesta Gestion Usuario')
               this.loading = false
               this.disablebtn = false
             },
             error: err => {
-              console.log(err)
+          //    console.log(err)
               this.OpenDialogo(err.message, 'Respuesta Gestion Usuario')
               this.loading = false
             }

@@ -203,19 +203,19 @@ export class ImportarNomencladoresComponent implements OnInit, AfterViewInit {
   }
 
   receiveMessage ($event: any) {
-    console.log($event)
+  //  console.log($event)
     if ($event) {
       this.HabilitarBtn()
 
-      console.log(localStorage.getItem('serverDB'))
+      /* console.log(localStorage.getItem('serverDB'))
       console.log(localStorage.getItem('intanceDB'))
       console.log(localStorage.getItem('nameDB'))
       console.log(localStorage.getItem('userDB'))
-      console.log(localStorage.getItem('passDB'))
+      console.log(localStorage.getItem('passDB')) */
       this.configdb = {
         server: localStorage.getItem('serverDB'),
         userName: localStorage.getItem('userDB'),
-        password: localStorage.getItem('passDB'),
+        password: this.api.DesEncriptar(localStorage.getItem('passDB'),1234),
         instanceName: localStorage.getItem('intanceDB'),
         database: localStorage.getItem('nameDB')
       }
@@ -391,9 +391,9 @@ export class ImportarNomencladoresComponent implements OnInit, AfterViewInit {
           this.requestCheckConecction = true
 
           sh['configdb'] = this.configdb
-          console.log(sh)
+         // console.log(sh)
           this.api.ImportarNomenclador(sh).subscribe((data: any) => {
-            console.log(data)
+       //     console.log(data)
 
             this.resultCheckConecction = data
             let dialogo = 'ImportadoNom'

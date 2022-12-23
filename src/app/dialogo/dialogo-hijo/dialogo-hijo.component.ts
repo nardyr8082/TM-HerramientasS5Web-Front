@@ -11,7 +11,7 @@ export class DialogoHijoComponent implements OnInit {
   constructor(    @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<DialogoHijoComponent>) { }
   
   ngOnInit(): void {
-    console.log(this.data);
+   // console.log(this.data);
     this.version=this.data.formValues['version']
     
     

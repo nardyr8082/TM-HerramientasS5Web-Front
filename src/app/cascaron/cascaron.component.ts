@@ -33,7 +33,7 @@ dialogR: any;
 
   ngOnInit(): void {
     this.ruta_component = this.route.snapshot.paramMap.get('id');
-    console.log(this.ruta_component);
+   // console.log(this.ruta_component);
     this.ruta_component.toString();
     this.validarPassword()
 
